@@ -9,6 +9,7 @@
 # A magic 8-ball, when asked a question, provides a random answer from a list.
 # The code below contains a list of possible answers. Create a magic 8-ball program that
 # prints a random answer.
+import random
 answer_list = [ "It is certain", "It is decidedly so", "Without a \
 doubt", "Yes, definitely", "You may rely on it", "As I see it, \
 yes", "Most likely", "Outlook good", "Yes", "Signs point to yes",
@@ -16,13 +17,20 @@ yes", "Most likely", "Outlook good", "Yes", "Signs point to yes",
 now", "Cannot predict now", "Concentrate and ask again", "Don ' t \
 count on it", "My reply is no", "My sources say no", "Outlook \
 not so good", "Very doubtful" ]
-
+question = input("Ask the 8-Ball a question: ")
+answer = answer_list[random.randrange(20)]
+print(answer)
 
 # PROBLEM 2 (Shuffle - 5pts)
 # A playing card consists of a suit (Heart, Diamond, Club, Spade) and a value (2,3,4,5,6,7,8,9,10,J,Q,K,A).
 # Create a list of all possible playing cards, which is a deck.
 # Then create a function that shuffles the deck, producing a random order.
+deck = ["2H","2D","2C","2S","3H","3D","3C","3S","4H","4D","4C","4S","5H","5D","5C","5S","6H","6D","6C","6S","7H","7D","7C","7S","8H","8D","8C","8S","9H","9D","9C","9S","10H","10D","10C","10S","JH","JD","JC","JS","QH","QD","QC","QS","KH","KD","KC","KS","AH","AD","AC","AS"]
+new_deck = []
+for i in range(len(deck)):
+    new_deck.append(deck.pop(random.randrange(len(deck))))
 
+print(new_deck)
 
 # PROBLEM 3 (The sieve of Eratosthenes - 10pts)
 # The sieve of Eratosthenes is a method to find all prime numbers between
@@ -36,6 +44,17 @@ not so good", "Very doubtful" ]
 # Process all the numbers of the list in this way. When you have finished,
 # the only numbers left on the list are primes.
 # Use this method to determine all the primes between 1 and 1000.
+number_list = []
+for i in range(1,1001):
+    number_list.append(i)
+number_list[0] = 0
+for i in range(len(number_list)):
+    if number_list[i] != 0:
+        for k in range(len(number_list) - number_list[i]):
+            if number_list[k + number_list[i]] % number_list[i] == 0:
+                number_list[k + number_list[i]] = 0
+print(number_list)
+
 
 # PROBLEM 4 (Tic-Tac-Toe - 15pts)
 # Write a Tic-Tac-Toe program that allows two people to play the game against each other.
@@ -71,6 +90,74 @@ not so good", "Very doubtful" ]
 #       announce draw
 #       break
 #   switch player
+board = [[" "," "," "],[" "," "," "],[" "," "," "]]
+
+def draw_board():
+    print(board[0][0], board[0][1], board[0][2])
+    print(board[1][0], board[1][1], board[1][2])
+    print(board[2][0], board[2][1], board[2][2])
+
+def win_check():
+    done = False
+    for i in range(3):
+        if board[i][0] == board[i][1] == board[i][2]:
+            if board[i][0] == "X":
+                print("X wins!")
+                done = True
+            elif board[i][0] == "O":
+                print("O wins!")
+                done = True
+    for i in range(3):
+        if board[0][i] == board[1][i] == board[2][i]:
+            if board[0][i] == "X":
+                print("X wins!")
+                done = True
+            elif board[0][i] == "O":
+                print("O wins!")
+                done = True
+    if board[0][0] == board[1][1] == board[2][2]:
+        if board[0][0] == "X":
+            print("X wins!")
+            done = True
+        elif board[0][0] == "O":
+            print("O wins!")
+            done = True
+    if board[0][2] == board[1][1] == board[2][0]:
+        if board[0][2] == "X":
+            print("X wins!")
+            done = True
+        elif board[0][2] == "O":
+            print("O wins!")
+            done = True
+
+    return done
+
+turns = 0
+done = False
+player = True
+while not done:
+    draw_board()
+    row_input = input("Which row (1,2,3)? ")
+    space_input = input("While space (1,2,3)")
+    if board[int(row_input)-1][int(space_input)-1] != " ":
+        print("This space is already taken!")
+    elif player == True:
+        board[int(row_input)-1][int(space_input)-1] = "X"
+        turns += 1
+        player = False
+    elif player == False:
+        board[int(row_input)-1][int(space_input)-1] = "O"
+        turns += 1
+        player = True
+
+    if turns >= 9 and win_check() == False:
+        print("It's a draw!")
+        done = True
+    if win_check():
+        break
+draw_board()
+
+
 
 # CHALLENGE PROBLEM 5 (Battleship NO CREDIT, JUST IF YOU WANT TO TRY IT)
 # Create a program that is a simplified version of the game “Battleship.”
