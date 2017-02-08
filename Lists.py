@@ -1,3 +1,10 @@
+'''
+Nice work
+magic 8ball should use len(list) in case you want to change the list later.  Suggestion
+Prompt on tic-tac-toe says While space instead of which.
+
+'''
+
 #LISTS (35PTS TOTAL)
 #In these exercises you write functions. Of course, you should not only write the functions,
 #you should also write code to test them. For practice, you should also comment your
